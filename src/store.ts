@@ -15,17 +15,17 @@ const SUMMON_PIECE = 'SUMMON_PIECE';
 const SWITCH_PLAYER = 'SWITCH_PLAYER';
 
 // Action creators
-export const movePiece = (from, to) => ({
+export const movePiece = (from: { x: number; y: number; }, to: undefined) => ({
   type: MOVE_PIECE,
   payload: { from, to },
 });
 
-export const placePiece = (piece, position) => ({
+export const placePiece = (piece: any, position: any) => ({
   type: PLACE_PIECE,
   payload: { piece, position },
 });
 
-export const summonPiece = (position) => ({
+export const summonPiece = (position: any) => ({
   type: SUMMON_PIECE,
   payload: { position },
 });
@@ -35,7 +35,7 @@ export const switchPlayer = () => ({
 });
 
 // Reducer
-const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action: { type: any; payload: { position?: any; from?: any; to?: any; piece?: any; }; }) => {
   switch (action.type) {
     case MOVE_PIECE:
       // Logic for moving a piece
@@ -46,7 +46,7 @@ const reducer = (state = initialState, action) => {
         return state;
       }
       const updatedBoard = state.board.map((row, rowIndex) =>
-        row.map((square, colIndex) => {
+        row.map((square: any, colIndex: any) => {
           if (rowIndex === from.y && colIndex === from.x) {
             return { ...square, piece: null };
           }
@@ -61,7 +61,7 @@ const reducer = (state = initialState, action) => {
       // Logic for placing a piece
       const { piece, position } = action.payload;
       const newBoardForPlacement = state.board.map((row, rowIndex) =>
-        row.map((square, colIndex) => {
+        row.map((square: any, colIndex: any) => {
           if (rowIndex === position.y && colIndex === position.x) {
             return { ...square, piece };
           }
@@ -73,7 +73,7 @@ const reducer = (state = initialState, action) => {
       // Logic for summoning a piece
       const randomPiece = state.pieces[Math.floor(Math.random() * (state.pieces.length - 1))];
       const newBoardForSummoning = state.board.map((row, rowIndex) =>
-        row.map((square, colIndex) => {
+        row.map((square: any, colIndex: any) => {
           if (rowIndex === action.payload.position.y && colIndex === action.payload.position.x) {
             return { ...square, piece: randomPiece };
           }

@@ -3,17 +3,22 @@ import Square from './Square';
 import { useDispatch, useSelector } from 'react-redux';
 import { movePiece } from './store';
 
-const Board = ({ board, onMovePiece }) => {
-  const dispatch = useDispatch();
-  const currentPlayer = useSelector((state) => state.currentPlayer);
+interface BoardProps {
+  board: { piece: string }[][];
+  onMovePiece: (x: number, y: number) => void;
+}
 
-  const handleClick = (x, y) => {
+const Board: React.FC<BoardProps> = ({ board, onMovePiece }) => {
+  const dispatch = useDispatch();
+  const currentPlayer = useSelector((state: { currentPlayer: string }) => state.currentPlayer);
+
+  const handleClick = (x: number, y: number) => {
     const selectedPiece = board[y][x].piece;
     if (selectedPiece === 'king' && (currentPlayer === 'player1' && y >= 6 || currentPlayer === 'player2' && y <= 2)) {
       alert("The king cannot enter the opponent's territory!");
       return;
     }
-    dispatch(movePiece({ x, y }));
+    dispatch(movePiece({ x, y }, undefined));
   };
 
   return (

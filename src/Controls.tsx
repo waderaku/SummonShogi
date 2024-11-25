@@ -2,10 +2,15 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { summonPiece } from './store';
 
-const Controls = ({ currentPlayer, onPlacePiece, onSummonPiece }) => {
+const Controls = ({ }) => {
   const dispatch = useDispatch();
 
-  const handleSummon = (position) => {
+  interface Position {
+    x: number;
+    y: number;
+  }
+
+  const handleSummon = (position: Position): void => {
     dispatch(summonPiece(position));
   };
 

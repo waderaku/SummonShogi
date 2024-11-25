@@ -6,18 +6,18 @@ import { movePiece, placePiece, summonPiece } from './store';
 
 const Game = () => {
   const dispatch = useDispatch();
-  const board = useSelector((state) => state.board);
-  const currentPlayer = useSelector((state) => state.currentPlayer);
+  const board = useSelector((state: { board: any }) => state.board);
+  const currentPlayer = useSelector((state: { currentPlayer: any }) => state.currentPlayer);
 
-  const handleMovePiece = (from, to) => {
-    dispatch(movePiece(from, to));
+  const handleMovePiece = (x: number, y: number) => {
+    dispatch(movePiece({ x, y }, undefined));
   };
 
-  const handlePlacePiece = (piece, position) => {
+  const handlePlacePiece = (piece: any, position: any) => {
     dispatch(placePiece(piece, position));
   };
 
-  const handleSummonPiece = (position) => {
+  const handleSummonPiece = (position: any) => {
     dispatch(summonPiece(position));
   };
 
@@ -25,9 +25,6 @@ const Game = () => {
     <div className="game">
       <Board board={board} onMovePiece={handleMovePiece} />
       <Controls
-        currentPlayer={currentPlayer}
-        onPlacePiece={handlePlacePiece}
-        onSummonPiece={handleSummonPiece}
       />
     </div>
   );
