@@ -3,7 +3,17 @@ import { Provider } from 'react-redux';
 
 // Initial state
 const initialState = {
-  board: Array(9).fill(Array(9).fill({ piece: null, position: null })),
+  board: Array(9).fill('').map((_, rowIndex) =>
+    Array(9).fill('').map((_, colIndex) => {
+      if (rowIndex === 0 && colIndex === 4) {
+        return { piece: 'king', position: { x: colIndex, y: rowIndex } };
+      } else if (rowIndex === 8 && colIndex === 4) {
+        return { piece: 'king', position: { x: colIndex, y: rowIndex } };
+      } else {
+        return { piece: '', position: { x: colIndex, y: rowIndex } };
+      }
+    })
+  ),
   currentPlayer: 'player1',
   pieces: ['pawn', 'rook', 'knight', 'bishop', 'gold', 'silver', 'lance', 'king'],
 };
@@ -46,9 +56,9 @@ const reducer = (state = initialState, action: { type: any; payload: { position?
         return state;
       }
       const updatedBoard = state.board.map((row, rowIndex) =>
-        row.map((square: any, colIndex: any) => {
+        row.map((square, colIndex) => {
           if (rowIndex === from.y && colIndex === from.x) {
-            return { ...square, piece: null };
+            return { ...square, piece: '' };
           }
           if (rowIndex === to.y && colIndex === to.x) {
             return { ...square, piece: pieceToMove };
@@ -61,7 +71,7 @@ const reducer = (state = initialState, action: { type: any; payload: { position?
       // Logic for placing a piece
       const { piece, position } = action.payload;
       const newBoardForPlacement = state.board.map((row, rowIndex) =>
-        row.map((square: any, colIndex: any) => {
+        row.map((square, colIndex) => {
           if (rowIndex === position.y && colIndex === position.x) {
             return { ...square, piece };
           }
@@ -73,7 +83,7 @@ const reducer = (state = initialState, action: { type: any; payload: { position?
       // Logic for summoning a piece
       const randomPiece = state.pieces[Math.floor(Math.random() * (state.pieces.length - 1))];
       const newBoardForSummoning = state.board.map((row, rowIndex) =>
-        row.map((square: any, colIndex: any) => {
+        row.map((square, colIndex) => {
           if (rowIndex === action.payload.position.y && colIndex === action.payload.position.x) {
             return { ...square, piece: randomPiece };
           }
