@@ -25,6 +25,7 @@ const Game = () => {
     <div className="game">
       <Board board={board} onMovePiece={handleMovePiece} />
       <Controls
+        onSummonPiece={handleSummonPiece}
       />
     </div>
   );

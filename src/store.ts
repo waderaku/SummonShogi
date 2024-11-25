@@ -25,7 +25,7 @@ const SUMMON_PIECE = 'SUMMON_PIECE';
 const SWITCH_PLAYER = 'SWITCH_PLAYER';
 
 // Action creators
-export const movePiece = (from: { x: number; y: number; }, to: undefined) => ({
+export const movePiece = (from: { x: number; y: number; }, to: { x: number; y: number; }) => ({
   type: MOVE_PIECE,
   payload: { from, to },
 });
