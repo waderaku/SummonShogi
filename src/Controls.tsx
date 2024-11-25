@@ -2,7 +2,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { summonPiece } from './store';
 
-const Controls = ({ }) => {
+interface ControlsProps {
+  onSummonPiece: (position: { x: number; y: number }) => void;
+}
+
+const Controls: React.FC<ControlsProps> = ({ onSummonPiece }) => {
   const dispatch = useDispatch();
 
   interface Position {
@@ -10,15 +14,11 @@ const Controls = ({ }) => {
     y: number;
   }
 
-  const handleSummon = (position: Position): void => {
-    dispatch(summonPiece(position));
-  };
-
   return (
     <div className="controls">
       <button
         className="summon-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => handleSummon({ x: 0, y: 0 })}
+        onClick={() => onSummonPiece({ x: 0, y: 0 })}
       >
         Summon Piece
       </button>
